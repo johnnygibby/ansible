@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Update Repo index
+    dnf:
+      update_cache: yes
+
+  - name: install apache2 package
+    dnf:
+      name: httpd
+      state: latest
+
+  - name: Add php support for Apache
+    dnf:
+      name: libapache2-mod-php
+      state: latest
