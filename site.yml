@@ -55,7 +55,7 @@
       state: latest
     when: ansible_distribution == "RedHat"
 
-- hosts: db_servers
+- hosts: file_servers
   become: true
   tasks:
 
@@ -63,5 +63,5 @@
     package:
       name:
         - samba
-      state: absent
+      state: latest
     
