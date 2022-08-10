@@ -1,3 +1,8 @@
-rh1.gibby.org apache_package=httpd php_package=php
-rh2.gibby.org apache_package=httpd php_package=php
-rh3.gibby.org apache_package=httpd php_package=php
+[web_servers]
+rh1.gibby.org 
+
+[db_servers]
+rh2.gibby.org 
+
+[file_servers]
+rh3.gibby.org
