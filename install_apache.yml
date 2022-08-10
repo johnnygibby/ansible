@@ -11,5 +11,5 @@
         - php
       state: latest
       update_cache: yes
-    when: ansisble_distribution == "RedHat"
+    when: ansible_distribution == "RedHat"
 
