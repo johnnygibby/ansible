@@ -2,7 +2,7 @@
  
 - hosts: all
   become: true
-  tasks:
+  pre_tasks:
 
   - name: install updates (RedHat)
     dnf:
@@ -17,22 +17,21 @@
     when: ansible_distribution == "Ubuntu"
 
 
-- hosts: web_servers
+- hosts: db_servers
   become: true
   tasks:
 
-  - name: install apache and php for Ubuntu servers
+  - name: install mariadb for Ubuntu servers
     apt:
       name:
-        - apache2
-        - libapache2-mod-php
+        - mariadb
       state: latest
     when: ansible_distribution == "Ubuntu"
 
-  - name: install apache and php for RedHat servers
+  - name: install mariadb for RedHat servers
     dnf:
       name:
-        - httpd
-        - php
+        - mariadb
       state: latest
     when: ansible_distribution == "RedHat"
+
