@@ -63,5 +63,5 @@
     package:
       name:
         - samba
-      state: latest
+      state: absent
     
