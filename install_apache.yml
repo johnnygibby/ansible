@@ -4,13 +4,12 @@
   become: true
   tasks:
 
-  - name: Update Repo index
-    dnf:
-      update_cache: yes
-
-  - name: install apache2 and PHP package
+   - name: install apache2 and PHP package for RHEL
     dnf:
       name: 
         - httpd
         - php
       state: latest
+      update_cache: yes
+    when: ansisble_distribution == "RedHat"
+
