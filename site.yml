@@ -55,4 +55,13 @@
       state: latest
     when: ansible_distribution == "RedHat"
 
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: install Samba for Ubuntu servers
+    package:
+      name:
+        - samba
+      state: latest
     
