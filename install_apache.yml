@@ -4,7 +4,7 @@
   become: true
   tasks:
 
-   - name: install apache2 and PHP package for RHEL
+  - name: install apache2 and PHP package for RHEL
     dnf:
       name: 
         - httpd
