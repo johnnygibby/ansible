@@ -17,6 +17,26 @@
     when: ansible_distribution == "Ubuntu"
 
 
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install apache and php for Ubuntu servers
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache and php for RedHat servers
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "RedHat"
+
 - hosts: db_servers
   become: true
   tasks:
@@ -35,3 +55,4 @@
       state: latest
     when: ansible_distribution == "RedHat"
 
+    
