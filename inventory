@@ -1,8 +1,0 @@
-[web_servers]
-rh1.gibby.org 
-
-[db_servers]
-rh2.gibby.org 
-
-[file_servers]
-rh3.gibby.org
