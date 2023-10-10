@@ -10,8 +10,14 @@
 # Created by johnnygibby
 
 - name: Update system (if applicable)
-  hosts: "all_servers"
+  hosts: "all_servers_for_patching"
   become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
   tasks:
   - name: Update all installed packages using DNF module
     dnf:
@@ -28,8 +34,14 @@
 # Reboots a system if any of the preceeding plays sets the 'insights_needs_reboot' variable to true.
 # The variable can be overridden to suppress this behavior.
 - name: Reboot system (if applicable)
-  hosts: "all_servers"
+  hosts: "all_servers_for_patching"
   become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
   gather_facts: false
   tasks:
     - when:
@@ -47,14 +59,20 @@
             module: wait_for
             host: "{{ hostvars[inventory_hostname]['ansible_host'] | default(hostvars[inventory_hostname]['ansible_ssh_host'], true) | default(inventory_hostname, true) }}"
             port: "{{ hostvars[inventory_hostname]['ansible_port'] | default(hostvars[inventory_hostname]['ansible_ssh_port'], true) | default('22', true) }}"
-            delay: 30
+            delay: 40
             search_regex: OpenSSH
             timeout: 300
           become: false
 
 - name: run insights
-  hosts: "all_servers"
+  hosts: "all_servers_for_patching"
   become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
   gather_facts: false
   tasks:
     - name: run insights

@@ -18,3 +18,9 @@ rh2.gibby.org
 rh3.gibby.org
 zone9
 
+[all_servers_for_patching]
+rh1.gibby.org
+rh2.gibby.org
+rh3.gibby.org
+zone9
+rhel9hp.gibby.org
