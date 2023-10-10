@@ -1,0 +1,14 @@
+---
+  - hosts: rh1.gibby.org
+
+    tasks:
+    - name: Enable repo management
+      shell: cat /etc/rhsm/rhsm.conf | grep -i manage_repos
+      changed_when: false
+      failed_when: false
+      register: manage_repos
+
+    - name: Configure Repo Management
+      shell: subscription-manager config --rhsm.manage_repos=1
+      when: manage_repos.stdout.find('manage_repos = 0') != -1
+

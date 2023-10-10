@@ -1,0 +1,26 @@
+---
+#
+# 100623
+# Created by johnnygibby
+
+#- name        : include vaulted variables
+#  include_vars: /home/jgibbons/.ansible/inventory/vault_vars
+
+- name: Update MOTD (if applicable)
+  hosts: "file_servers"
+  become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
+  tasks:
+     - name: Check if directory exists
+       stat:
+         path: "/home/jgibbons/nas_home/Linux_stuff/usenfs01Scripts/"
+       register: file_data
+     - name: Update MOTD
+       command: sh /home/jgibbons/nas_home/Linux_stuff/usenfs01Scripts/jg_motd_configure_dynamic_update.sh
+       when: file_data.stat.exists
+

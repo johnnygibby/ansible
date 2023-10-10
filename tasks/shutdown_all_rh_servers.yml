@@ -1,0 +1,8 @@
+---
+# use  ansible-playbook tasks/shutdown_all_rh_servers.yml -K   so that it asks for the become password.
+- hosts: all_servers
+  become: true
+  tasks:
+
+  - name: Unconditionally shut down the machine with all defaults
+    community.general.shutdown:

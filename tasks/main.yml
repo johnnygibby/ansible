@@ -1,0 +1,32 @@
+---
+- name: set keys 
+- hosts: web_servers
+  tasks:
+  ansible.builtin.shell: "{{ wlg_rhel_use_sb_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'sandbox' or ansible_local is defined and ansible_local.seed is defined and   ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'staging' or ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'testing'
+
+  ansible.builtin.shell: "{{ wlg_rhel_use_dv_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'development' or   ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'education'
+
+  ansible.builtin.shell: "{{ wlg_rhel_use_vl_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'validation'
+
+  ansible.builtin.shell: "{{ wlg_rhel_use_pd_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and   ansible_local.seed.lifecycle_environment | lower == 'production'
+
+#USW
+  ansible.builtin.shell: "{{ wlg_rhel_usw_sb_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'sandbox' or ansible_local is defined and ansible_local.seed is defined and   ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'staging' or ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and   ansible_local.seed.lifecycle_environment | lower == 'testing'
+
+  ansible.builtin.shell: "{{ wlg_rhel_usw_dv_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'development' or   ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'education'
+
+  ansible.builtin.shell: "{{ wlg_rhel_usw_vl_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'validation'
+
+  ansible.builtin.shell: "{{ wlg_rhel_usw_pd_activation_key }}"
+  when: ansible_local is defined and ansible_local.seed is defined and ansible_local.seed.lifecycle_environment is defined and ansible_local.seed.lifecycle_environment | lower == 'production' and (wlg_region == "usw" or wlg_region == "anc" or wlg_region == "aor")
+
+    
+    ## JG TEST!!!
+  when: wlg_os =="rhel8"
