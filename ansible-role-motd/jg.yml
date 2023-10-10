@@ -1,0 +1,5 @@
+---
+
+- hosts: file_servers
+  roles:
+    - totaldebug/motd

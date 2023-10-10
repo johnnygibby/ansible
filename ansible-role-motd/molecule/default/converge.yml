@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: file_servers
+  become: true
+
+  vars:
+    motd_server_role: Test
+
+  roles:
+    - role: ansible-role-motd

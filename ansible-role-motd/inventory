@@ -1,0 +1,20 @@
+[web_servers]
+rh1.gibby.org
+#192.168.88.33 
+
+[db_servers]
+rh2.gibby.org 
+
+[zone_servers]
+zone9.gibby.org
+
+[file_servers]
+rh3.gibby.org
+# ansible_become_pass='{{ become_pass }}'
+
+[all_servers]
+rh1.gibby.org
+rh2.gibby.org
+rh3.gibby.org
+zone9
+

@@ -1,0 +1,61 @@
+---
+#
+# 100623
+# Created by johnnygibby
+
+#- name        : include vaulted variables
+#  include_vars: /home/jgibbons/.ansible/inventory/vault_vars
+
+- name: MOTD
+  hosts: "all_servers"
+  become: true
+  collections:
+    - ansible.posix
+
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+    motd_template: "motd.j2"
+    # modify motd
+    motd_modification: true
+    motd_server_role: unknown
+
+    # Default information to show under the ASCII art
+    motd_info:
+      - " FQDN:    ": "{{ ansible_fqdn }} - {{ ansible_local['custom']['general']['purpose'] }}"
+      - " Distro:  ": "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+      - " IP:      ": "{{ ansible_eth.0['ipv4']['address'] }}"
+        #      - " IP:      ": "{{ ansible_enp1s0.ipv4.address }}"
+      - " Kernel:  ": "{{ ansible_kernel }}"  
+      - " CPUs:    ": "{{ ansible_processor_vcpus }}"
+      - " RAM:     ": "{{ (ansible_memtotal_mb / 1000) | round(1) }}GB"
+      - " Mounts:  ": "{{ mount_points }}"
+      - " Last Change: ": "{{ ansible_date_time.date }}, {{ ansible_date_time.time }}"
+
+  tasks:
+    - name: gather mount_points
+      set_fact:
+        mount_points: "{{ ansible_mounts|json_query('[].mount') }}"
+
+    - name: define traditional ethernet facts
+      set_fact:
+        ansible_eth: "{% set ansible_eth = ansible_eth|default([]) + [hostvars[inventory_hostname]['ansible_' + item]] %}{{ ansible_eth|list }}"
+      when: hostvars[inventory_hostname]['ansible_' + item]['type'] == 'ether'
+      with_items:
+        - "{{ hostvars[inventory_hostname]['ansible_interfaces'] }}"
+
+    - name: distribute the /etc/motd file
+      template:
+        src: "{{ motd_template }}"
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: 0644
+      become: true
+      tags:
+        - motd_config
+      when: motd_modification | default(true)
+      changed_when: false
+
