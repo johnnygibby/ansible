@@ -7,7 +7,7 @@
 #  include_vars: /home/jgibbons/.ansible/inventory/vault_vars
 
 - name: MOTD
-  hosts: "all_servers"
+  hosts: "all_servers, ansible_servers, kvm_servers"
   become: true
   collections:
     - ansible.posix

@@ -1,0 +1,100 @@
+---
+# Red Hat Insights has recommended one or more actions for you, a system administrator, to review and if you
+# deem appropriate, deploy on your systems running Red Hat software. Based on the analysis, we have automatically
+# generated an Ansible Playbook for you. Please review and test the recommended actions and the Playbook as
+# they may contain configuration changes, updates, reboots and/or other changes to your systems. Red Hat is not
+# responsible for any adverse outcomes related to these recommendations or Playbooks.
+#
+# 080523
+# https://console.redhat.com/insights/remediations/b3f1ec78-40ba-4200-8f94-2b91d8c33518
+# Created by johnnygibby
+
+# Reboots a system if any of the preceeding plays sets the 'insights_needs_reboot' variable to true.
+# The variable can be overridden to suppress this behavior.
+
+- name: Reboot system (if applicable)
+  hosts: "all_servers_for_patching"
+  become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
+  gather_facts: false
+  tasks:
+        - name: Shutdown systems
+          shell: sleep 2 && shutdown -h now "Ansible triggered reboot"
+          async: 1
+          poll: 0
+          ignore_errors: true
+
+- name: Update system (if applicable)
+  hosts: "kvm_servers"
+  become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
+  tasks:
+  - name: Update all installed packages using DNF module
+    dnf:
+      name: '*'
+      state: latest
+      update_cache: yes
+      update_only: yes
+    register: yum_update_status
+
+  - name: Remove packates not needed anymore
+    yum:
+      autoremove: yes
+
+# Reboots a system if any of the preceeding plays sets the 'insights_needs_reboot' variable to true.
+# The variable can be overridden to suppress this behavior.
+- name: Reboot system (if applicable)
+  hosts: "kvm_servers"
+  become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
+  gather_facts: false
+  tasks:
+    - when:
+        - yum_update_status.changed is defined
+        - yum_update_status.changed
+      block:
+        - name: Reboot system
+          shell: sleep 2 && shutdown -r now "Ansible triggered reboot"
+          async: 1
+          poll: 0
+          ignore_errors: true
+
+        - name: Wait for system to boot up
+          local_action:
+            module: wait_for
+            host: "{{ hostvars[inventory_hostname]['ansible_host'] | default(hostvars[inventory_hostname]['ansible_ssh_host'], true) | default(inventory_hostname, true) }}"
+            port: "{{ hostvars[inventory_hostname]['ansible_port'] | default(hostvars[inventory_hostname]['ansible_ssh_port'], true) | default('22', true) }}"
+            delay: 40
+            search_regex: OpenSSH
+            timeout: 300
+          become: false
+
+- name: run insights
+  hosts: "all_servers_for_patching, kvm_servers"
+  become: true
+  vars_files:
+    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  vars:
+    ansible_become_pass: '{{ become_pass }}'
+
+  gather_facts: false
+  tasks:
+    - name: run insights
+      command: insights-client
+      changed_when: false
