@@ -1,9 +1,7 @@
 ---
-#
 # 100623
 # Created by johnnygibby
 
-#- name        : include vaulted variables
 #  include_vars: /home/jgibbons/.ansible/inventory/vault_vars
 
 - name: MOTD
@@ -12,13 +10,8 @@
   collections:
     - ansible.posix
 
-  # vars_files:
-  #   - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
-
   vars:
-#    ansible_become_pass: '{{ become_pass }}'
     motd_template: "motd.j2"
-    # modify motd
     motd_modification: true
     motd_server_role: unknown
 
