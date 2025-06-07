@@ -37,7 +37,7 @@
   tasks:
     - name: gather mount_points
       set_fact:
-        mount_points: "{{ ansible_mounts|json_query('[].mount') }}"
+        mount_points: "{{ ansible_mounts|community.general.json_query('[].mount') }}"
 
     - name: define traditional ethernet facts
       set_fact:
