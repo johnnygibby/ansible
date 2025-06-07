@@ -36,11 +36,11 @@
 - name: Reboot system (if applicable)
   hosts: "all_servers_for_patching"
   become: true
-  vars_files:
-    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+  # vars_files:
+  #   - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
 
-  vars:
-    ansible_become_pass: '{{ become_pass }}'
+  # vars:
+  #   ansible_become_pass: '{{ become_pass }}'
 
   gather_facts: false
   tasks:
@@ -67,11 +67,11 @@
 - name: run insights
   hosts: "all_servers_for_patching"
   become: true
-  vars_files:
-    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+  # vars_files:
+  #   - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
 
-  vars:
-    ansible_become_pass: '{{ become_pass }}'
+  # vars:
+  #   ansible_become_pass: '{{ become_pass }}'
 
   gather_facts: false
   tasks:
