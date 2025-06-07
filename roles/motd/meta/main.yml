@@ -1,0 +1,25 @@
+---
+
+galaxy_info:
+  role_name: motd
+  author: Steven Marks
+  company: "Total Debug"
+  description: Customizable Message Of The Day (motd)
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.7
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Amazon
+      versions:
+        - all
+  galaxy_tags:
+    - motd
+    - system
