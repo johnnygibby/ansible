@@ -15,8 +15,8 @@
   vars_files:
     - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
 
-  vars:
-    ansible_become_pass: '{{ become_pass }}'
+  # vars:
+  #   ansible_become_pass: '{{ become_pass }}'
 
   tasks:
   - name: Update all installed packages using DNF module
