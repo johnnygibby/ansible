@@ -7,13 +7,13 @@
 #  include_vars: /home/jgibbons/.ansible/inventory/vault_vars
 
 - name: MOTD
-  hosts: "all_servers, ansible_servers, kvm_servers"
+  hosts: "all_servers, ansible_servers, kvm_server, web_servers"
   become: true
   collections:
     - ansible.posix
 
-  vars_files:
-    - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+  # vars_files:
+  #   - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
 
   vars:
     ansible_become_pass: '{{ become_pass }}'
