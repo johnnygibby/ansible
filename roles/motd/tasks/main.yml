@@ -22,11 +22,12 @@
       - " IP:      ": "{{ ansible_eth.0['ipv4']['address'] }}"
         #      - " IP:      ": "{{ ansible_enp1s0.ipv4.address }}"
       - " Kernel:  ": "{{ ansible_kernel }}"  
-      - " CPUs:    ": "{{ ansible_processor_vcpus }}"
-      - " RAM:     ": "{{ (ansible_memtotal_mb / 1000) | round(1) }}GB"
+      - " CPU, RAM:": "{{ ansible_processor_vcpus }}, {{ (ansible_memtotal_mb / 1000) | round(1) }}GB"
+#      - " RAM:     ": "{{ (ansible_memtotal_mb / 1000) | round(1) }}GB"
       - " Mounts:  ": "{{ mount_points }}"
       - " Last Change: ": "{{ ansible_date_time.date }}, {{ ansible_date_time.time }}"
-
+      - "   "
+      
   tasks:
     - name: gather mount_points
       set_fact:
