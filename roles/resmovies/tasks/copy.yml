@@ -3,6 +3,8 @@
 - name: copy
   hosts: "workstation"
   become: true
+  collections:
+     - ansible.windows
 
   tasks:
     - name: Fetch file from remote Linux host to control node
