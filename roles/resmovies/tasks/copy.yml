@@ -1,7 +1,7 @@
 ---
 
 - name: copy
-  hosts: "workstation"
+  hosts: "workstations"
   become: true
   collections:
   #   - ansible.windows
