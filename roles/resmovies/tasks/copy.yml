@@ -4,8 +4,8 @@
   hosts: "workstation"
   become: true
   collections:
-     - ansible.windows
-     - community.windows
+  #   - ansible.windows
+  #   - community.windows
 
   tasks:
     - name: Fetch file from remote Linux host to control node
