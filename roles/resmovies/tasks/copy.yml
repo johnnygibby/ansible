@@ -17,6 +17,7 @@
         flat: yes
     
     - name: Copy fetched file from control node to Windows host
+      become: false
       ansible.windows.win_copy:
         src: /tmp/{{ inventory_hostname }}/resmovies.txt # Path on the control node
         dest: E:\resmovies.txt
