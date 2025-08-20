@@ -10,7 +10,8 @@
   tasks:
     - name: Fetch file from remote Linux host to control node
       fetch:
-        src: /plex/Library/movies/resmovies.txt
+        src: /home/jgibbons/resmovies.txt
+#        src: /plex/Library/movies/resmovies.txt
         dest: /tmp/{{ inventory_hostname }}/  # Temporary location on control node
         flat: yes
     
