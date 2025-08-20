@@ -18,7 +18,7 @@
       ansible.windows.win_copy:
         src: /tmp/{{ inventory_hostname }}/resmovies.txt # Path on the control node
         dest: E:\resmovies.txt
-      delegate_to: terminator
+      delegate_to: 192.168.88.214
   
   # - name: Reboot system (if applicable)
   # hosts: "all_servers_for_patching"
