@@ -2,7 +2,7 @@
 
 - name: copy
   hosts: "workstations"
-  become: true
+#  become: true
   collections:
   #   - ansible.windows
   #   - community.windows
