@@ -3,7 +3,7 @@
 - name: copy
   hosts: "workstations"
   become: true
-  become_method: runas
+#  become_method: runas
   collections:
   #   - ansible.windows
   #   - community.windows
