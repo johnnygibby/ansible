@@ -1,0 +1,35 @@
+---
+
+- name: copy
+  hosts: "workstation"
+  become: true
+
+- name: Fetch file from remote Linux host to control node
+  fetch:
+    src: /plex/Library/movies/resmovies.txt
+    dest: /tmp/{{ inventory_hostname }}/  # Temporary location on control node
+    flat: yes
+
+- name: Copy fetched file from control node to Windows host
+  win_copy:
+    src: /tmp/{{ inventory_hostname }}/resmovies.txt # Path on the control node
+    dest: E:\resmovies.txt
+  delegate_to: terminator
+  
+  # - name: Reboot system (if applicable)
+  # hosts: "all_servers_for_patching"
+  # become: true
+  # vars_files:
+  #   - /home/jgibbons/.ansible/inventory/vaulted_vars.yml
+
+  # vars:
+  #   ansible_become_pass: '{{ become_pass }}'
+
+  # gather_facts: false
+  # tasks:
+  #       - name: Shutdown systems
+  #         shell: sleep 2 && shutdown -h now "Ansible triggered reboot"
+  #         async: 1
+  #         poll: 0
+  #         ignore_errors: true
+
