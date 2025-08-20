@@ -2,7 +2,7 @@
 
 - name: copy
   hosts: "workstations"
-#  become: true
+  become: true
   collections:
   #   - ansible.windows
   #   - community.windows
@@ -10,8 +10,8 @@
   tasks:
     - name: Fetch file from remote Linux host to control node
       fetch:
-        src: /home/jgibbons/resmovies.txt
-#        src: /plex/Library/movies/resmovies.txt
+#        src: /home/jgibbons/resmovies.txt
+        src: /plex/Library/movies/resmovies.txt
         dest: /tmp/{{ inventory_hostname }}/  # Temporary location on control node
         flat: yes
     
