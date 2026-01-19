@@ -32,14 +32,10 @@
       set_fact:
         mount_points: "{{ ansible_mounts|community.general.json_query('[].mount') }}"
 
-    # - name: Print all facts
-    #   ansible.builtin.debug:
-    #     var: ansible_facts
+     - name: Print all facts
+       ansible.builtin.debug:
+         var: ansible_facts
 
-    - name: Display all variables/facts known for a host
-      ansible.builtin.debug:
-        var: hostvars[inventory_hostname]
-      verbosity: 4
       
     - name: define traditional ethernet facts
       set_fact:
