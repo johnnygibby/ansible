@@ -32,9 +32,9 @@
       set_fact:
         mount_points: "{{ ansible_mounts|community.general.json_query('[].mount') }}"
 
-     - name: Print all facts
-       ansible.builtin.debug:
-         var: ansible_facts
+    - name: Print all facts
+      ansible.builtin.debug:
+        var: ansible_facts
 
       
     - name: define traditional ethernet facts
